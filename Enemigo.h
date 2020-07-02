@@ -67,8 +67,11 @@ class CEnemigo
                 } 
             }
         }
+        Rectangle retornarRectangulo(){
+			return Rectangle(y,x,50, 50);
+		}
 };
-
+//falta private 
 
 
 #endif

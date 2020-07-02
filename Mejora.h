@@ -25,8 +25,12 @@ class CMejora
             this->indiceY=0;
         }
         ~CMejora(){
-    
+    	
         }
+        
+        Rectangle devolcerR(){
+			return Rectangle(j* 50 , i * 50 ,ancho*3.125, alto*3.125);
+		}
         void dibujar(Graphics^g,Bitmap^bmpMejoras,int **matriz){
             Rectangle porcionAUsar=Rectangle(indiceX*ancho,indiceY*alto,ancho,alto);
             
@@ -88,8 +92,11 @@ class CMejora
                     break;
             }
         }
+        int getTipo_de_mejora(){
+			return tipo_de_mejora;
+		}
 };
 
-
+//falta private
 
 #endif

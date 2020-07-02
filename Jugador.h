@@ -9,10 +9,10 @@ class CJugador
 		CJugador(int x,int y){
 			this->x=x;
 			this->y=y;
-			
+			//mobimiento de jugador
 			dx=0;
 			dy=0;
-			
+			acelerar = 0;
 			ancho=18;
 			alto=26;
 			
@@ -22,10 +22,29 @@ class CJugador
 			direccion=Direcciones::Ninguna;
 			ultima=Direcciones::Abajo;
 		}
+		
 		~CJugador(){}
-		void setDireccion(Direcciones direccion){
-			this->direccion=direccion;
+		Rectangle retornarRectangulo(){
+			return Rectangle(x + 2 * 3 + dx, y +15 * 3, (ancho - 4 )* 3, (alto - 15) * 3);
 		}
+		int getVidas(){return vidas;}
+		int getX(){ return x + 2 *3};
+		int getY(){ return y + 15 * 3 + dy; }
+		void setVidas(int v){ vidas = V;}
+		void setDX(int dx){
+			this->dx =dx;
+		}
+		void setDY(int dy){
+			this->dy;
+		}
+		
+		Direcciones getDireccion(){
+			return direccion;
+		}
+		void setDireccion(Direcciones direccionActual){
+			this->direccion=direccionActual;
+		}
+		
 		void ValidarMovimiento(int** matriz) {
 			int X, Y = 0;
 			for (int i = 0; i < filas; i++) {
@@ -40,6 +59,30 @@ class CJugador
 			X += 50;
 				}
 				Y += 50;
+			}
+		}
+		void disminuirvidas(){
+			x=50;
+			y=50;
+			vidas--;
+			
+		}
+		void disminuirvidas(int PuntaIzquierda, int PuntaDerecha, int CentroInicioY, 
+		int CentroFinaly, int PuntaSuperior, int PuntaInferior, int centrox, int CentroFinalX){
+		
+			if (getX()>=PuntaInzquierda && getX()<=PuntaDerecha && getY()>=CentroInicioY && getY()<=CentroFinalY ){
+			
+				x=50;
+				y=50;
+				vidas--;
+				
+			
+			}
+			
+			if(getY()>=PuntaSuperior && getY()<= PuntaInferior && getX()>= centroInicioX && getX() <= CentroFinalX ){		
+				x=50;
+				y=50;
+				vidas--;
 			}
 		}
 
@@ -127,7 +170,13 @@ class CJugador
 			}
 			dibujarJugador(g, bmpJugador, matriz);
 		}
-	
+	int getAcelerar(){
+		return acelerar;
+	}
+	void setAcelerar(int v){
+		
+		acelerar = v;
+	}
 	private:
 		int x;
 		int y;
@@ -137,9 +186,10 @@ class CJugador
 		int ancho;
 		int alto;
 		int indiceX;
-
-		Rectangle CDI;
-		Rectangle CAA;
+		int indiceY;
+		int acelerar;
+		Rectangle CDI;//??
+		Rectangle CAA;//??
 
 		Direcciones direccion;
 		Direcciones ultima;		

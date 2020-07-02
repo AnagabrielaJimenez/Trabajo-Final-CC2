@@ -75,6 +75,7 @@ namespace JuegoBomberman{
 			BufferedGraphics^buffer= espacio->Allocate(g,this->ClientRectangle);
 			
 			oControladora->dibujar(buffer->Graphics,bmpSuelo,bmpSolido,bmpDestruible,bmpJugador,bmpMejoras,bmpEnemigo);
+			this->Text=""+oControladora->getojugador()->getVidas();
 			buffer->Render(g);
 			delete buffer, espacio, g;
 		}	

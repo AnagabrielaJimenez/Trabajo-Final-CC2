@@ -13,6 +13,8 @@ class CControladora
 		CArrMejoras *oArrMejoras;//agregar
         CArrEnemigos *oArrEnemigos;
 		int nivel;
+		
+		
 	public:
 		CControladora(){
 			oEscenario=new CEscenario();
@@ -26,6 +28,39 @@ class CControladora
 		void CambiarNivel(){//generar mapa
 			oEscenario->generarMatriz();
 		}
+		
+		void disminuir_Vidas_Por_Enemigo(){
+			for(int i=0;i< oArrBonbas->getarreglo().size();i++)
+			{
+				
+				if(oJugador->retornarRectangulo().IntersectsWith(oArrEnemigos->getarregloEnemigos().at(i)->retornarRectangulo()))
+					oJugador->disminuirvidas();
+					
+			}
+			
+		}
+		void disminuir_Vidas_Por_Bomba(){
+			int PuntaIzquierda, PuntaDerecha, CentroInicioY, CentroFinalY,
+			PuntaSuperior, PuntaInferior, CentroInicioX, CentroFinalX;
+		
+			for(int i=0;i< oArrBonbas->getarregloBombas().size();i++)
+			{
+				PuntaIzquierda= OArrBombas->getarregloBombas().at(i)->getX()-100;
+				PuntaDerecha= OArrBombas->getarregloBombas().at(i)->getX()+150;
+				PuntaSuperior= OArrBombas->getarregloBombas().at(i)->getY()-100;
+				PuntaIferior= OArrBombas->getarregloBombas().at(i)->getX()+150;
+				CentroInicioY = OArrBombas->getarregloBombas().at(i)->getY();
+				CentroInicioX = OArrBombas->getarregloBombas().at(i)->getX();
+				CentroFinalX = OArrBombas->getarregloBombas().at(i)->getX() + 50 ;
+				CentroFinalY = OArrBombas->getarregloBombas().at(i)->getX() + 50;
+			
+				if(OArrBombas->getarregloBombas().at(i)->getEstado()== Estado::explocion)
+				{
+					oJugador->disminuirvidas(PuntaIzquierda, PuntaDerecha, CentroInicioY, CentroFinalY,PuntaSuperior, PuntaInferior, CentroInicioX, CentroFinalX)
+				}
+			}
+
+		}
 		void dibujar(Graphics^g,Bitmap^bmpBase,Bitmap^bmpSolido,Bitmap^bmpDestruible,Bitmap^bmpMejoras, Bitmap^bmpEnemigo){
 			oEscenario->PintarBase(g,bmpBase);
 			oArrMejoras->dibujar(g,bmpMejoras,oEscenario->getmatriz());
@@ -33,7 +68,9 @@ class CControladora
 			
 			oJugador->moverJugador(g, bmpJugador, oEscenario->getmatriz());
 			oArrEnemigos->dibujar(g,bmpEnemigo,oEscenario->getmatriz());
-			oArrBombas->dibujar_una_bomba(g,bmpBomba,bmpExplosion,oJugador->getX(),oJugador->getY(),oEscenario->getmatriz()) 
+			oArrBombas->dibujar_una_bomba(g,bmpBomba,bmpExplosion,oJugador->getX(),oJugador->getY(),oEscenario->getmatriz())
+			disminuir_vidas_Por_Bomba();
+			disminuir_vidas_Por_Enemigo();
 		}
 		void crear_enemigos_y_mejoras(){
             oArrEnemigos->crearEnemigos();
@@ -53,5 +90,38 @@ class CControladora
 			return nivel;
 		}
 		
+		
+		void agarrarMejoras(){
+			for(int i=0 ; i < oArrMejoras->getvector_mejoras().size();i++)
+			{
+				if(oJugador->retornarRectangulo().IntersectsWith(oArrMejoras->getvector_mejoras().at(i)->))
+				{
+					switch(oArrMejoras->gervector_mejoras().at->getTipo_de_mejora()){
+						case 1://agregar una bomba
+							oArrBombas->setBombas(oArrBombas->getBombas()+1);
+							break;
+						case 2://mover una bomba
+				
+				
+							break;
+						case 3://calabera
+								oJugador->setVidas(oJugador->getVidas() - 1);
+				
+							break;
+						case 4://patines
+				
+							Jugador->setAcelerar(oJugador->getAcelerar() + 3);
+				
+							break;
+						case 5://vidas
+							oJugador->setVidas(oJugador->getVidas() + 1);
+							break;
+						default:
+							break;
+					}
+				}
+			}
+		}
+		
 };
-#endif
+#endif//falta private
