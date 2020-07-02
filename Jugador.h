@@ -59,7 +59,7 @@ class CJugador
 			y+=dy;
 		}	
 		
-		void moverJugador(Graphics^ g, Bitmap^ bmpJugador, in** matriz) {
+		void moverJugador(Graphics^ g, Bitmap^ bmpJugador, int** matriz) {
 			direccion==Arriba ? ancho=17 : ancho=18;
 			switch(direccion)
 			{
