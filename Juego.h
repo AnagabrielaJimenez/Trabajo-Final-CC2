@@ -8,17 +8,28 @@ namespace JuegoBomberman{
 	using namespace System::Data;
 	using namespace System::Drawing;
 	
+
 	public ref class Juego:public System::Windows::Forms
 	{
-	public:
-		CControladora *oControladora=new CControladora();
+	private:
+		CControladora *oControladora;
 		Bitmap^bmpSolido=gcnew Bitmap("Imagenes\\bmpSolido.png");
 		Bitmap^bmpDestruible=gcnew Bitmap("Imagenes\\bmpDestruible.png");
 		Bitmap^bmpSuelo=gcnew Bitmap("Imagenes\\bmpSuelo.png");
 		Bitmap^bmpJugador=gcnew Bitmap("Imagenes\\jugador.png");
+		Bitmap^bmpBomba=gcnew Bitmap("Imagenes\\bomba.png");
+		Bitmap^bmpExprosion=gcnew Bitmap("Imagenes\\exposion.png");
+		Bitmap^bmpMejoras=gcnew Bitmap("Imagenes\\bmpMejoras.png");
+		Bitmap^bmpEnemigo=gcnew Bitmap("Imagenes\\bmpEnemigo.png");
+	public:
 		Juego(void){
-			bmpJugador->MakeTransparent(bmpJugador->GetPixel(0,0));
+
 			InitialieComponent();
+			oControladora=new CControladora();
+			//falta bomba
+			bmpJugador->MakeTransparent(bmpJugador->GetPixel(0,0));
+			bmpEnemigo->MakeTransparent(bmpEnemigo->GetPixel(0,0));
+			
 		}	
 	}
 	protected:
@@ -30,7 +41,10 @@ namespace JuegoBomberman{
 				delete components;
 			}
 		}
-	private: System::Windows::Form::Timer^ timer1;
+	private: System::Windows::Forms::Label^ lbNivel;
+	private: System::Windows::Forms::ProgressBar^ pbCarga;
+	private: System::Windows::Forms::Timer^ trcarga;
+	private: System::Windows::Forms::Timer^ timer1;
 	protected:
 	private: System::ComponentModel::IContanier^ components;
 	
@@ -53,17 +67,19 @@ namespace JuegoBomberman{
 			this->Text=L"Juego";
 			this->Load+= gcnew System::EventNandler(this,&Juego::Juego_Load);
 		}	this->ResumeLayout(false);
+
 	#pragma endregion
 		private: System::Void timer1_Tick(System::Object^ sender, System::EventArgs^ e){
 			Graphics ^g=this->CreateGraphics();
 			BufferedGraphicsContext^espacio= BufferedGraphicsManager::Current;
 			BufferedGraphics^buffer= espacio->Allocate(g,this->ClientRectangle);
 			
-			oControladora->dibujar(buffer->Graphics,bmpSuelo,bmpSolido,bmpDestruible,bmpJugador);
+			oControladora->dibujar(buffer->Graphics,bmpSuelo,bmpSolido,bmpDestruible,bmpJugador,bmpMejoras,bmpEnemigo);
 			buffer->Render(g);
 			delete buffer, espacio, g;
 		}	
 		private: System::Void Juego_Load(System::Object^ sender, System::EventArgs^ e){
+			lblNivel->Text="Nivel: "+ oControladores->getNivel();
 			oControladora->CambiarNivel();
 		}
 		private:System::Void MantenerTecla(System::Object^ sender,System::Windows::Forms::KeyEventArgs^ e){
@@ -93,8 +109,19 @@ namespace JuegoBomberman{
 					break;
 			}
 		}
-	};
-}
+		/* //
+		lblNivel->Text="Nivel: "+ oControladores->getNivel();
+		pbCarga->Increment(10);
+		if(trCarga->Interval ==2500 && oControladora->getoArrMejoras()->getvector_mejoras().size()<oControladora->getNivel()){
+			oControladora->crear_enemigos_y_mejoras();
+		}
+		else {
+			trCarga->Enabled=false;
+		
+		}
+		*/
+};
+
 		
 		
 		
@@ -102,4 +129,4 @@ namespace JuegoBomberman{
 		
 		
 		
-}
+
