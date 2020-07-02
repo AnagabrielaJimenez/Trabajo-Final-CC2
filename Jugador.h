@@ -1,5 +1,7 @@
 #ifndef _JUGADOR_H_
 #define _JUGADOR_H_
+using namespace System::Drawing;
+enum Direcciones(Arriba, Abajo, Izquierda, Derecha, Ninguna);
 
 class CJugador
 {
@@ -24,8 +26,32 @@ class CJugador
 		void setDireccion(Direcciones direccion){
 			this->direccion=direccion;
 		}
-		
-		void dibujarJugador(Graphics^g,Bitmap^bmpJugador){
+		void ValidarMovimiento(int** matriz) {
+			int X, Y = 0;
+			for (int i = 0; i < filas; i++) {
+				X = 0;
+				for (int j = 0; j < columnas; j++) {
+					Rectangle c1 = Rectangle(X, Y, 50, 50);
+					if (matriz[i][j] == 1) || matriz[i][j] == 3){
+					if (CDI.IntersectsWith(c1))dx = 0;
+					if (CAA.IntersectsWith(c1))dy = 0;
+			}
+
+			X += 50;
+				}
+				Y += 50;
+			}
+		}
+
+		void dibujarJugador(Graphics^ g, Bitmap^ bmpJugador, int** matriz) {
+			CDI = Rectangle(x + 2 * 3 + dx, y + 15 * 3, (ancho - 4) * 3, (alto - 15) * 3);
+			CAA = Rectangle(x + 2 * 3, y + 15 * 3 + dy, (ancho - 4) * 3, (alto - 15) * 3);
+
+			g->DrawRectangle(Pens::Transparent, CDI);
+			g->DrawRectangle(Pens::Transparent, CAA);
+
+			ValidarMovimiento(matriz);
+
 			Rectangle PorcionAUsar=Rectangle(indiceX*ancho,indiceY*alto,ancho, alto);
 			Rectangle Aumento=Rectangle(x,y,ancho*3,alto*3);
 			g->DrawImage(bmpJugador,Aumento,PorcionUsar,GraphicsUnit::Pixel);
@@ -33,7 +59,7 @@ class CJugador
 			y+=dy;
 		}	
 		
-		void moverJugador(Graphics^g,Bitmap^bmpJugador){
+		void moverJugador(Graphics^ g, Bitmap^ bmpJugador, in** matriz) {
 			direccion==Arriba ? ancho=17 : ancho=18;
 			switch(direccion)
 			{
@@ -99,7 +125,7 @@ class CJugador
 				default:
 					break;
 			}
-			dibujarJugador(g,bmpJugador);
+			dibujarJugador(g, bmpJugador, matriz);
 		}
 	
 	private:
@@ -111,6 +137,10 @@ class CJugador
 		int ancho;
 		int alto;
 		int indiceX;
+
+		Rectangle CDI;
+		Rectangle CAA;
+
 		Direcciones direccion;
 		Direcciones ultima;		
 		

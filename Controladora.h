@@ -18,7 +18,7 @@ class CControladora
 		void dibujar(Graphics^g,Bitmap^bmpBase,Bitmap^bmpSolido,Bitmap^bmpDestruible){
 			oEscenario->PintarBase(g,bmpBase);
 			oEscenario->PintarMatriz(g,Bitmap^bmpSolido,Bitmap^bmpDestruible);
-			oJugador->moverJugador(g,bmpJugador);
+			oJugador->moverJugador(g, bmpJugador, oEscenario->getmatriz()); 
 		}
 		CJugador *getoJugador(){
 			return oJugador;
