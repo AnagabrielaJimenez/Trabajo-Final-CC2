@@ -1,7 +1,7 @@
 #ifndef _JUGADOR_H_
 #define _JUGADOR_H_
 using namespace System::Drawing;
-enum Direcciones(Arriba, Abajo, Izquierda, Derecha, Ninguna);
+enum Direcciones { Arriba, Abajo, Izquierda, Derecha, Ninguna };
 
 class CJugador
 {
@@ -26,18 +26,19 @@ class CJugador
 		void setDireccion(Direcciones direccion){
 			this->direccion=direccion;
 		}
+		int getX() { return x + 2 * 3; }
+		int getY() { return y + 15 * 3 + dy; }
 		void ValidarMovimiento(int** matriz) {
 			int X, Y = 0;
-			for (int i = 0; i < filas; i++) {
+			for (int i = 0; i < 15; i++) {
 				X = 0;
-				for (int j = 0; j < columnas; j++) {
+				for (int j = 0; j < 17; j++) {
 					Rectangle c1 = Rectangle(X, Y, 50, 50);
-					if (matriz[i][j] == 1) || matriz[i][j] == 3){
+					if (matriz[i][j] == 1 || matriz[i][j] == 3){
 					if (CDI.IntersectsWith(c1))dx = 0;
 					if (CAA.IntersectsWith(c1))dy = 0;
-			}
-
-			X += 50;
+					}
+					X += 50;
 				}
 				Y += 50;
 			}
@@ -83,7 +84,7 @@ class CJugador
 					dy=10;
 					ultima=Abajo;
 					break;
-				case Direcciones::Izuierda:
+				case Direcciones::Izquierda:
 					indiceY=3;
 					if(indiceX >=1 && indiceX <3)
 						indiceX++;
@@ -117,7 +118,7 @@ class CJugador
 						indiceX=1;
 						indiceY=1;
 					}
-					if(ultima==Direcciones::Iizquierda){
+					if(ultima==Direcciones::Izquierda){
 						indiceX=1;
 						indiceY=3;
 					}
@@ -144,4 +145,5 @@ class CJugador
 		Direcciones direccion;
 		Direcciones ultima;		
 		
-}
+};
+#endif //!_JUGADOR_H_

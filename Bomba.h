@@ -141,7 +141,7 @@ public:
 	}
     void animarExplosion(){
         if(indiceEX >= 0 && indiceEX < 3)
-            indiceEx++;
+            indiceEX++;
         else
             estado = Estado::desaparecer;
     }

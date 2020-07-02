@@ -10,14 +10,19 @@ namespace JuegoBomberman{
 	
 	public ref class Juego:public System::Windows::Forms
 	{
-	public:
+	private:
 		CControladora *oControladora=new CControladora();
 		Bitmap^bmpSolido=gcnew Bitmap("Imagenes\\bmpSolido.png");
 		Bitmap^bmpDestruible=gcnew Bitmap("Imagenes\\bmpDestruible.png");
 		Bitmap^bmpSuelo=gcnew Bitmap("Imagenes\\bmpSuelo.png");
 		Bitmap^bmpJugador=gcnew Bitmap("Imagenes\\jugador.png");
+		Bitmap^bmpBomba = gcnew Bitmap("Imagenes\\bomba.png");
+		Bitmap^ bmpExplosion = gcnew Bitmap("Imagenes\\explosion.png");
+	public:	
 		Juego(void){
 			bmpJugador->MakeTransparent(bmpJugador->GetPixel(0,0));
+			bmpBomba->MakeTransparent(bmpBomba->GetPixel(0, 0));
+			bmpExplosion->MakeTransparent(bmpExplosion->GetPixel(0, 0));
 			InitialieComponent();
 		}	
 	}
@@ -59,7 +64,7 @@ namespace JuegoBomberman{
 			BufferedGraphicsContext^espacio= BufferedGraphicsManager::Current;
 			BufferedGraphics^buffer= espacio->Allocate(g,this->ClientRectangle);
 			
-			oControladora->dibujar(buffer->Graphics,bmpSuelo,bmpSolido,bmpDestruible,bmpJugador);
+			oControladora->dibujar(buffer->Graphics,bmpSuelo,bmpSolido, bmpBomba, bmpExplosion,bmpDestruible,bmpJugador);
 			buffer->Render(g);
 			delete buffer, espacio, g;
 		}	
@@ -69,6 +74,9 @@ namespace JuegoBomberman{
 		private:System::Void MantenerTecla(System::Object^ sender,System::Windows::Forms::KeyEventArgs^ e){
 			swich(e->KeyCode)
 			{
+			case Keys::Space:
+				oControladora->agregarBomba();
+				break;
 			case Keys::Up:
 				oControladora->getoJugador()->setDireccion(Direcciones::Arriba);
 				break;
