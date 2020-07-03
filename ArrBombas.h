@@ -35,10 +35,17 @@ public:
             }
         }
     }
+<<<<<<< HEAD
     Vector<CBomba*>getarregloBombas() {
         return arregloBombas;
 
     }
+=======
+    Vector<CBomba*>getarregloBombas(){
+		return arregloBombas;
+	 
+}
+>>>>>>> origin/master
 };
 
 

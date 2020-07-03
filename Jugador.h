@@ -117,7 +117,7 @@ class CJugador
 					else
 						indiceX=1;
 					dx=0;
-					dy=-10;
+					dy=-10 - acelerar;
 					ultima=Arriba;
 					break;
 				case Direcciones::Abajo:
@@ -127,7 +127,7 @@ class CJugador
 					else
 						indiceY=1;
 					dx=0;
-					dy=10;
+					dy=10 + acelerar;
 					ultima=Abajo;
 					break;
 				case Direcciones::Izquierda:
@@ -136,7 +136,7 @@ class CJugador
 						indiceX++;
 					else
 						indiceX=1;
-					dx=-10;
+					dx=-10-acelerar;
 					dy=0;
 					ultima=Izquierda;
 					break;
@@ -146,7 +146,7 @@ class CJugador
 						indiceX++;
 					else
 						indiceX=1;
-					dx=10;
+					dx=10+acelerar;
 					dy=0;
 					ultima=Derecha;
 					break;
