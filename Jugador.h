@@ -192,8 +192,8 @@ class CJugador
 		int indiceX;
 		int indiceY;
 		int acelerar;
-		Rectangle CDI;//??
-		Rectangle CAA;//??
+		Rectangle CDI;
+		Rectangle CAA;
 
 		Direcciones direccion;
 		Direcciones ultima;		
