@@ -35,6 +35,10 @@ public:
             }
         }
     }
+    Vector<CBomba*>getarregloBombas(){
+		return arregloBombas;
+	 
+}
 };
 
 
