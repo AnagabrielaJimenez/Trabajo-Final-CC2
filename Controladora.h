@@ -21,7 +21,8 @@ class CControladora
 		CArrMejoras *oArrMejoras;//agregar
         CArrEnemigos *oArrEnemigos;
 		int nivel;
-		
+
+		bool habilidad;
 		
 >>>>>>> origin/master
 	public:
@@ -35,6 +36,7 @@ class CControladora
             oArrEnemigos=new CArrEnemigos();
 			//agregar
 			nivel=1;
+			habilidad=false;
 >>>>>>> origin/master
 		}
 		~CControladora(){}
@@ -80,42 +82,6 @@ class CControladora
 			}
 
 		}
-		void dibujar(Graphics^g,Bitmap^bmpBase,Bitmap^bmpSolido,Bitmap^bmpDestruible,Bitmap^bmpMejoras, Bitmap^bmpEnemigo){
->>>>>>> origin/master
-			oEscenario->PintarBase(g,bmpBase);
-			oArrMejoras->dibujar(g,bmpMejoras,oEscenario->getmatriz());
-			oEscenario->PintarMatriz(g,Bitmap^bmpSolido,Bitmap^bmpDestruible);
-<<<<<<< HEAD
-			oJugador->moverJugador(g, bmpJugador, oEscenario->getmatriz()); 
-			oArrBombas->dibujar_una_bomba(g, bmpBomba, bmpExplosion, oJugador->getX(), oJugador->getY(), oEscenario->getmatriz());
-=======
-			
-			oJugador->moverJugador(g, bmpJugador, oEscenario->getmatriz());
-			oArrEnemigos->dibujar(g,bmpEnemigo,oEscenario->getmatriz());
-			oArrBombas->dibujar_una_bomba(g,bmpBomba,bmpExplosion,oJugador->getX(),oJugador->getY(),oEscenario->getmatriz())
-			disminuir_vidas_Por_Bomba();
-			disminuir_vidas_Por_Enemigo();
->>>>>>> origin/master
-		}
-		void crear_enemigos_y_mejoras(){
-            oArrEnemigos->crearEnemigos();
-            oArrMejoras->crearMejoras();
-        }
-		CJugador *getoJugador(){
-			return oJugador;
-		}
-
-		CArrMejoras *getoArrMejoras(){
-            return oArrMejoras;
-        }
-		CArrEnemigos * getoArrEnemigos(){
-			return  oArrEnemigos;
-		}
-		int getNivel(){
-			return nivel;
-		}
-		
-		
 		void agarrarMejoras(){
 			for(int i=0 ; i < oArrMejoras->getvector_mejoras().size();i++)
 			{
@@ -126,7 +92,7 @@ class CControladora
 							oArrBombas->setBombas(oArrBombas->getBombas()+1);
 							break;
 						case 2://mover una bomba
-				
+							hablilidad= true;	
 				
 							break;
 						case 3://calabera
@@ -147,6 +113,71 @@ class CControladora
 				}
 			}
 		}
+		void dibujar(Graphics^g,Bitmap^bmpBase,Bitmap^bmpSolido,Bitmap^bmpDestruible,Bitmap^bmpMejoras, Bitmap^bmpEnemigo){
+>>>>>>> origin/master
+			oEscenario->PintarBase(g,bmpBase);
+			oArrMejoras->dibujar(g,bmpMejoras,oEscenario->getmatriz());
+			oEscenario->PintarMatriz(g,Bitmap^bmpSolido,Bitmap^bmpDestruible);
+<<<<<<< HEAD
+			oJugador->moverJugador(g, bmpJugador, oEscenario->getmatriz()); 
+			oArrBombas->dibujar_una_bomba(g, bmpBomba, bmpExplosion, oJugador->getX(), oJugador->getY(), oEscenario->getmatriz());
+=======
+			
+			oJugador->moverJugador(g, bmpJugador, oEscenario->getmatriz());
+			oArrEnemigos->dibujar(g,bmpEnemigo,oEscenario->getmatriz());
+			oArrBombas->dibujar_una_bomba(g,bmpBomba,bmpExplosion,oJugador->getX(),oJugador->getY(),oEscenario->getmatriz())
+			disminuir_vidas_Por_Bomba();
+			disminuir_vidas_Por_Enemigo();
+			agarrarMejoras();
+			patear();
+>>>>>>> origin/master
+		}
 		
+		void crear_enemigos_y_mejoras(){
+            oArrEnemigos->crearEnemigos();
+            oArrMejoras->crearMejoras();
+        }
+		CJugador *getoJugador(){
+			return oJugador;
+		}
+
+		CArrMejoras *getoArrMejoras(){
+            return oArrMejoras;
+        }
+		CArrEnemigos * getoArrEnemigos(){
+			return  oArrEnemigos;
+		}
+		int getNivel(){
+			return nivel;
+		}
+		void patear() {
+			if (habilidad == true) {
+				for (int i = 0; i < oArrBombas->getarregloBombas().size(); i++)
+				{
+					if (oArrBombas->getarregloBombas().at(i)->getEstado() == Estado::normal &&oJugador->retornarRectangulo().IntersectsWith(oArrBombas->getarregloBombas().at(i)->getRectangulo()))
+					{
+						if (oJugador->getDireccion() == Direcciones::Abajo && oEscenario->getValue((oArrBombas->getarregloBombas().at(i)->getY() + 50) / 50, (oArrBombas->getarregloBombas().at(i)->getX()) / 50) == 2) {
+							oArrBombas->getarregloBombas().at(i)->sety(oArrBombas->getarregloBombas().at(i)->getY() + 50);
+							oArrBombas->getarregloBombas().at(i)->settiempo(0);
+						}
+						if (oJugador->getDireccion() == Direcciones::Arriba&& oEscenario->getValue((oArrBombas->getarregloBombas().at(i)->getY() - 50) / 50, (oArrBombas->getarregloBombas().at(i)->getX()) / 50) == 2) {
+							oArrBombas->getarregloBombas().at(i)->sety(oArrBombas->getarregloBombas().at(i)->getY() - 50);
+							oArrBombas->getarregloBombas().at(i)->settiempo(0);
+						}
+						if (oJugador->getDireccion() == Direcciones::Derecha&& oEscenario->getValue((oArrBombas->getarregloBombas().at(i)->getY()) / 50, (oArrBombas->getarregloBombas().at(i)->getX() + 50) / 50) == 2) {
+							oArrBombas->getarregloBombas().at(i)->setx(oArrBombas->getarregloBombas().at(i)->getX() + 50);
+							oArrBombas->getarregloBombas().at(i)->settiempo(0);
+						}
+						if (oJugador->getDireccion() == Direcciones::Izquierda&& oEscenario->getValue((oArrBombas->getarregloBombas().at(i)->getY()) / 50, (oArrBombas->getarregloBombas().at(i)->getX() - 50) / 50) == 2) {
+							oArrBombas->getarregloBombas().at(i)->setx(oArrBombas->getarregloBombas().at(i)->getX() - 50);
+							oArrBombas->getarregloBombas().at(i)->settiempo(0);
+						}
+					}
+				}
+			}
+		}
+		
+		
+
 };
 #endif//falta private
