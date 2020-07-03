@@ -40,6 +40,9 @@ public:
         anchoExplosion=80/4;
     }
     ~CBomba(){}
+    Rectangle getRectangulo(){
+    	return Rectangle(x, y, 40, 40);
+	}
     bool validarLugar(int xJugador, int yJugador, int **matriz){
         if(matriz[yJugador/50][xJugador/50]==0 || matriz[yJugador/50][xJugador/50]==2)
             return true;
@@ -148,6 +151,26 @@ public:
     Estado getEstado(){
         return estado;
     }
+    
+    int getX(){
+    	return x;
+	}
+	int getY(){
+		return y;
+	}
+	void setx(int v){
+		return x;
+	}
+	void sety(int v){
+		return y;
+	}
+	void sety(int v){
+		return y;
+	}
+	void settiempo(){
+		tiempo_antes_de_explotar=v;
+	}
+	
 };
 
-#endif // !__BOMBA_H__x22222222222222222222222222222
+#endif // !__BOMBA_H__
